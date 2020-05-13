@@ -1,0 +1,24 @@
+FROM node:alpine
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY package*.json /app/
+RUN npm ci
+
+COPY . /app
+
+ARG ENDPOINT
+
+RUN npm run build
+
+##
+
+FROM nginx:alpine
+
+ADD nginx/nginx.conf /etc/nginx/
+
+COPY --from=0 /app/build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
