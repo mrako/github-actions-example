@@ -5,6 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
+const WebpackCdnPlugin = require('webpack-cdn-plugin');
+
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const GLOBALS = {
   'process.env.ENDPOINT': JSON.stringify(process.env.ENDPOINT || 'http://0.0.0.0:9000/api'),
@@ -15,7 +18,7 @@ module.exports = {
   cache: true,
   devtool: 'cheap-module-eval-source-map',
   entry: {
-    main: ['@babel/polyfill', path.join(__dirname, 'src/index.jsx')],
+    main: './src/index.jsx',
   },
   devServer: {
     contentBase: 'src/public',
@@ -70,9 +73,19 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/public/index.html',
       filename: 'index.html',
+    }),
+    new WebpackCdnPlugin({
+      modules: {
+        react: [
+          { name: 'react', var: 'React', path: 'umd/react.production.min.js' },
+          { name: 'react-dom', var: 'ReactDOM', path: 'umd/react-dom.production.min.js' },
+        ],
+      },
+      publicPath: '/node_modules',
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
