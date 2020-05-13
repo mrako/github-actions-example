@@ -63,7 +63,11 @@ module.exports = {
         query: {
           presets: [
             '@babel/preset-react',
-            ['@babel/env', { targets: { browsers: ['last 2 versions'] }, modules: false }],
+            ['@babel/env', {
+              targets: { browsers: ['last 2 versions'] },
+              modules: false,
+              useBuiltIns: "usage"
+            }],
           ],
           plugins: [
             '@babel/plugin-proposal-class-properties',
