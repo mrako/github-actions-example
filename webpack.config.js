@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
@@ -75,6 +76,7 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new MinifyPlugin({}, { sourceMap: null }),
     new TransferWebpackPlugin([{ from: 'src/public' }], '.'),
     new webpack.DefinePlugin(GLOBALS),
   ],
