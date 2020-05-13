@@ -7,3 +7,10 @@ services:
       - 8000:8000
     volumes:
       - ./src:/app/src
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+      args:
+        - ENDPOINT=${ENDPOINT}
