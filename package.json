@@ -1,10 +1,10 @@
 {
-  "name": "simple-weather-frontend",
+  "name": "github-actions-example",
   "version": "0.0.1",
-  "description": "Simple Weather Frontend",
+  "description": "Github Actions Example",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrako/simple-weather-frontend.git"
+    "url": "https://github.com/mrako/github-actions-example.git"
   },
   "author": "Marko Klemetti <marko.klemetti@gmail.com>",
   "license": "MIT",
