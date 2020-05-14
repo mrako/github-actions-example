@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 const baseURL = process.env.ENDPOINT;
 
@@ -13,7 +13,7 @@ const getWeatherFromApi = async () => {
   return {};
 };
 
-class Weather extends React.Component {
+class Weather extends Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +35,7 @@ class Weather extends React.Component {
 
     return (
       <div className="icon">
-        { icon && <img alt="weather icon" src={`/img/${icon}.svg`} /> }
+        { icon && <img alt={icon} src={`/img/${icon}.svg`} /> }
       </div>
     );
   }
