@@ -1,7 +1,7 @@
 module.exports = {
-  rootDir: "..",
+  rootDir: '..',
   transform: {
-    "^.+\\.(js|jsx)$": "<rootDir>/test/jest.transform.js"
+    '^.+\\.(js|jsx)$': '<rootDir>/test/jest.transform.js',
   },
-  testURL: "http://localhost"
+  testURL: 'http://localhost',
 };
