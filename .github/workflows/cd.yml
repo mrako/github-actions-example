@@ -1,0 +1,50 @@
+name: Continuous Deployment
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Audit
+        run: docker-compose run frontend npm audit
+      - name: Lint
+        run: docker-compose run frontend npm run lint
+      - name: Test
+        run: docker-compose run frontend npm run test
+
+  staging:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SOURCE_DIR: 'build/'
+      AWS_REGION: 'eu-central-1'
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@master
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_REGION: 'eu-central-1'
+          AWS_S3_BUCKET: github-actions-example-staging
+
+#  release:
+#    if: ${{ github.ref == 'master' }}
+#    needs: build
+#    runs-on: ubuntu-latest
+#    env:
+#      SOURCE_DIR: 'build/'
+#      AWS_REGION: 'eu-central-1'
+#      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#    steps:
+#      - uses: actions/checkout@master
+#      - uses: jakejarvis/s3-sync-action@master
+#        with:
+#          args: --acl public-read --follow-symlinks --delete
+#        env:
+#          AWS_REGION: 'eu-central-1'env:
+#          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
