@@ -13,4 +13,4 @@ services:
       context: .
       dockerfile: Dockerfile.production
       args:
-        - ENDPOINT=${ENDPOINT}
+        ENDPOINT: ${ENDPOINT}
