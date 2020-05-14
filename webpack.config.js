@@ -3,7 +3,6 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const WebpackCdnPlugin = require('webpack-cdn-plugin');
 
@@ -14,7 +13,7 @@ const GLOBALS = {
 };
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV || 'development',
   cache: true,
   devtool: 'cheap-module-eval-source-map',
   entry: {
@@ -39,10 +38,26 @@ module.exports = {
       'node_modules',
     ],
   },
-  optimization: {
-    minimizer: [
-      new OptimizeCSSAssetsPlugin({}),
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel-loader',
+        query: {
+          presets: [
+            '@babel/env',
+            '@babel/preset-react',
+          ],
+          plugins: [
+            '@babel/transform-runtime',
+            '@babel/plugin-proposal-class-properties',
+          ],
+        },
+      },
     ],
+  },
+  optimization: {
     splitChunks: {
       cacheGroups: {
         vendor: {
@@ -54,34 +69,8 @@ module.exports = {
       },
     },
   },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'babel-loader',
-        query: {
-          presets: [
-            '@babel/preset-react',
-            ['@babel/env', {
-              targets: { browsers: ['last 2 versions'] },
-              modules: false,
-              useBuiltIns: "usage"
-            }],
-          ],
-          plugins: [
-            '@babel/plugin-proposal-class-properties',
-          ],
-        },
-      },
-    ],
-  },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'src/public/index.html',
-      filename: 'index.html',
-    }),
     new WebpackCdnPlugin({
       modules: {
         react: [
@@ -93,8 +82,11 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new MinifyPlugin({}, { sourceMap: null }),
     new TransferWebpackPlugin([{ from: 'src/public' }], '.'),
+    new HtmlWebpackPlugin({
+      template: 'src/public/index.html',
+      filename: 'index.html',
+    }),
     new webpack.DefinePlugin(GLOBALS),
   ],
 };
