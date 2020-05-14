@@ -24,7 +24,7 @@ jobs:
         run: docker-compose run frontend npm run test
 
   staging:
-    if: ${{ github.ref != 'master' }}
+    if: ${{ github.ref != 'refs/heads/master' }}
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -42,7 +42,7 @@ jobs:
           AWS_S3_BUCKET: github-actions-example-staging
 
   release:
-    if: ${{ github.ref == 'master' }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: build
     runs-on: ubuntu-latest
     steps:
