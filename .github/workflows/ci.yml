@@ -11,5 +11,5 @@ jobs:
         run: docker-compose run frontend npm audit
       - name: Lint
         run: docker-compose run frontend npm run lint
-      - name: Jest
-        run: docker-compose run frontend npm run jest
+      - name: Test
+        run: docker-compose run frontend npm run test
