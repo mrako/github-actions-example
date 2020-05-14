@@ -1,9 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
-const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const WebpackCdnPlugin = require('webpack-cdn-plugin');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -82,7 +82,7 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new TransferWebpackPlugin([{ from: 'src/public' }], '.'),
+    new CopyWebpackPlugin([{ from: 'src/public' }], '.'),
     new HtmlWebpackPlugin({
       template: 'src/public/index.html',
       filename: 'index.html',
