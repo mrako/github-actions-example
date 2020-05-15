@@ -11,6 +11,8 @@ body{
 .icon {
   width: 30vw;
   height: 30vw;
+
+  filter: opacity(0.5);
 }
 
 @media only screen and (max-width: 1024px) {
