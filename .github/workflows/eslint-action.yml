@@ -1,4 +1,4 @@
-name: Docker
+name: Eslint Action
 
 on: [push, pull_request]
 
