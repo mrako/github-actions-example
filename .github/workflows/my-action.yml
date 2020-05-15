@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: mrako/simple-action@master
+      - uses: mrako/simple-action@v1
+        id: simple-action
         with:
           who-to-greet: Eficode
+      - name: Get the output time
+        run: echo "The time was ${{ steps.simple-action.outputs.time }}"
