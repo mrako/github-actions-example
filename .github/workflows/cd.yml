@@ -35,7 +35,6 @@ jobs:
     if: ${{ github.ref != 'refs/heads/master' }}
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
