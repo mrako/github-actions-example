@@ -1,0 +1,11 @@
+name: My Simple Action
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v1
+      - uses: mrako/simple-action@master
+        with:
+          who-to-greet: Eficode
