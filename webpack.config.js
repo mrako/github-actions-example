@@ -82,7 +82,7 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new CopyWebpackPlugin([{ from: 'src/public' }], '.'),
+    new CopyWebpackPlugin({ patterns: [{ from: 'src/public', to: '.' }] }),
     new HtmlWebpackPlugin({
       template: 'src/public/index.html',
       filename: 'index.html',
