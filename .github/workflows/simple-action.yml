@@ -1,8 +1,8 @@
 name: Simple Action
 
-on:
-  schedule:
-    - cron: '*/15 * * * *'
+#on:
+#  schedule:
+#    - cron: '*/15 * * * *'
 
 jobs:
   build:
